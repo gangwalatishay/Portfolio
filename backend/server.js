@@ -23,9 +23,12 @@ app.use(express.json());
 
 /* ================= MONGODB ================= */
 mongoose
-  .connect("mongodb://127.0.0.1:27017/portfolio")
-  .then(() => console.log("✅ MongoDB connected"))
+  .connect(
+    "mongodb+srv://jatishay057_db_user:sfKCpaTgI3TADurq@portfolio1.ikr3wo9.mongodb.net/?appName=portfolio1"
+  )
+  .then(() => console.log("✅ MongoDB Atlas connected"))
   .catch((err) => console.error("❌ MongoDB error:", err));
+
 
 /* ================= ROOT ================= */
 app.get("/", (req, res) => {
