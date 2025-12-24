@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -6,16 +7,15 @@ const bcrypt = require("bcryptjs");
 
 const Project = require("./models/Project");
 const Testimonial = require("./models/Testimonial");
+// const Contact = require("./models/Contact");
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
-/* ================= ADMIN CONFIG ================= */
-const ADMIN_EMAIL = "jatishay057@gmail.com";
-const ADMIN_PASSWORD_HASH =
-  "$2a$10$KZkz5R0bRrM4lR6mXhVZJeKJx9kPq...."; // paste your hash
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWT_SECRET = "SUPER_SECRET_KEY_CHANGE_LATER";
 
 /* ================= MIDDLEWARE ================= */
 app.use(cors());
@@ -23,11 +23,10 @@ app.use(express.json());
 
 /* ================= MONGODB ================= */
 mongoose
-  .connect(
-    "mongodb+srv://jatishay057_db_user:sfKCpaTgI3TADurq@portfolio1.ikr3wo9.mongodb.net/?appName=portfolio1"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB Atlas connected"))
   .catch((err) => console.error("❌ MongoDB error:", err));
+
 
 
 /* ================= ROOT ================= */
@@ -178,6 +177,16 @@ app.delete("/api/testimonials/:id", authenticateAdmin, async (req, res) => {
     }
 
     res.json({ success: true, message: "Testimonial deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+/* ================= CONTACT ================= */
+app.post("/api/contact", async (req, res) => {
+  try {
+    const contact = new Contact(req.body);
+    await contact.save();
+    res.json({ message: "Message received successfully ✅" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
