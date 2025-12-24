@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 
 const Project = require("./models/Project");
 const Testimonial = require("./models/Testimonial");
-const Contact = require("../models/Contact");
+// const Contact = require("../models/Contact");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
