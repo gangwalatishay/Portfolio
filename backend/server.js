@@ -12,7 +12,9 @@ const PORT = 8080;
 
 /* ================= ADMIN CONFIG ================= */
 const ADMIN_EMAIL = "jatishay057@gmail.com";
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync("ATI@shay123", 10);
+const ADMIN_PASSWORD_HASH =
+  "$2a$10$KZkz5R0bRrM4lR6mXhVZJeKJx9kPq...."; // paste your hash
+
 const JWT_SECRET = "SUPER_SECRET_KEY_CHANGE_LATER";
 
 /* ================= MIDDLEWARE ================= */
@@ -178,7 +180,10 @@ app.delete("/api/testimonials/:id", authenticateAdmin, async (req, res) => {
   }
 });
 
+
+
 /* ================= SERVER ================= */
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+ 
