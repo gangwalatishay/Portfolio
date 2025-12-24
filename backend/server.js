@@ -3,11 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const Project = require("./models/Project");
 const Testimonial = require("./models/Testimonial");
-// const Contact = require("./models/Contact");
+const Contact = require("../models/Contact");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -49,6 +49,8 @@ const authenticateAdmin = (req, res, next) => {
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
+console.log("ADMIN_EMAIL:", process.env.ADMIN_EMAIL);
+console.log("ADMIN_PASSWORD_HASH:", process.env.ADMIN_PASSWORD_HASH);
 
 /* ================= ADMIN LOGIN ================= */
 app.post("/api/admin/login", async (req, res) => {
